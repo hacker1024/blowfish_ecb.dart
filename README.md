@@ -15,7 +15,7 @@ The `BlowfishECB` class fully implements [Codec](https://api.dart.dev/stable/2.1
 
 The following simple usage is adapted from the included example project:
 ```dart
-// Encode the key and instantiate the codec.
+// Instantiate the codec with a key.
 final blowfish = BlowfishECB(key);
 
 // Encrypt the input data.
