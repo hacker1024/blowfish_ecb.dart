@@ -30,8 +30,8 @@ Everything is licenced under the GNU Lesser General Public License v3 or above.
 See [`LICENCE`](LICENSE) and [`LICENCE.LESSER`](LICENSE.LESSER) for more
 information.
 
-Essentially, if this code is modified in your project, the modified source code
-for this package must be made available.
+Essentially, if this package is modified in your project, the modified package
+sources must be released.
 
 ## Inspiration
 The algorithm implementation was ported over from the
