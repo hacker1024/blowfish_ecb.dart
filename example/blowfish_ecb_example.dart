@@ -12,12 +12,11 @@ void main() {
 
   // Encrypt the input (with padding to fit the 8-bit block size).
   print('Encrypting "$message" with PKCS #5 padding.');
-  final encryptedData =
-      blowfish.encoder.convert(padPKCS5(utf8.encode(message)));
+  final encryptedData = blowfish.encode(padPKCS5(utf8.encode(message)));
 
   // Decrypt the encrypted data.
   print('Decrypting "${hexEncode(encryptedData)}".');
-  var decryptedData = blowfish.decoder.convert(encryptedData);
+  var decryptedData = blowfish.decode(encryptedData);
   // Remove PKCS5 padding.
   decryptedData = decryptedData.sublist(
       0, decryptedData.length - getPKCS5PadCount(decryptedData));

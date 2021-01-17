@@ -19,10 +19,10 @@ The following simple usage is adapted from the included example project:
 final blowfish = BlowfishECB(key);
 
 // Encrypt the input data.
-final encryptedData = blowfish.encoder.convert(message);
+final encryptedData = blowfish.encode(message);
 
 // Decrypt the encrypted data.
-final decryptedData = blowfish.decoder.convert(encryptedData);
+final decryptedData = blowfish.decode(encryptedData);
 ```
 
 ## License

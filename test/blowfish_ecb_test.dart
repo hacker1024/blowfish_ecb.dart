@@ -37,7 +37,7 @@ void main() {
         'Encryption',
         () {
           final encryptedData =
-              blowfish.encoder.convert(Uint8List.fromList(sampleDecryptedData));
+              blowfish.encode(Uint8List.fromList(sampleDecryptedData));
 
           expect(encryptedData, equals(sampleEncryptedData));
         },
@@ -47,7 +47,7 @@ void main() {
         'Decryption',
         () {
           final decryptedData =
-              blowfish.decoder.convert(Uint8List.fromList(sampleEncryptedData));
+              blowfish.decode(Uint8List.fromList(sampleEncryptedData));
 
           expect(decryptedData, equals(sampleDecryptedData));
         },
@@ -121,16 +121,14 @@ void main() {
           final blowfish = BlowfishECB(Uint8List.fromList(sampleKey));
 
           // Encoding
-          expect(() => blowfish.encoder.convert(Uint8List(200)),
+          expect(() => blowfish.encode(Uint8List(200)),
               isNot(throwsFormatException));
-          expect(() => blowfish.encoder.convert(Uint8List(201)),
-              throwsFormatException);
+          expect(() => blowfish.encode(Uint8List(201)), throwsFormatException);
 
           // Decoding
-          expect(() => blowfish.decoder.convert(Uint8List(200)),
+          expect(() => blowfish.decode(Uint8List(200)),
               isNot(throwsFormatException));
-          expect(() => blowfish.decoder.convert(Uint8List(201)),
-              throwsFormatException);
+          expect(() => blowfish.decode(Uint8List(201)), throwsFormatException);
         },
       );
     },
