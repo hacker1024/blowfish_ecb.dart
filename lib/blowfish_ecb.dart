@@ -16,7 +16,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/// Blowfish ECB [Codec] implementation.
+/// A Blowfish ECB [Codec] implementation.
 library blowfish_ecb;
 
 export 'src/blowfish_ecb.dart';
