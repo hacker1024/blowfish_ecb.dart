@@ -92,15 +92,40 @@ abstract class BlowfishECBConverter extends Converter<List<int>, Uint8List> {
   @override
   Uint8List convert(List<int> input) {
     final result = Uint8List.fromList(input);
-    transform(result);
+    _transform(
+      result,
+      BlowfishECB._copyP(p),
+      BlowfishECB._copyS(s),
+    );
     return result;
   }
 
-  @protected
-  void transform(Uint8List input) {
+  /// Starts a chunked conversion.
+  ///
+  /// The length of added chunks must be a multiple of 8.
+  @override
+  Sink<List<int>> startChunkedConversion(Sink<Uint8List> sink) {
     final p = BlowfishECB._copyP(this.p);
     final s = BlowfishECB._copyS(this.s);
+    return BlowfishECBConverterSink(
+      sink,
+      (block) => _transform(block, p, s),
+    );
+  }
 
+  @protected
+  void transformBlock(
+    Uint8List data,
+    int startIndex,
+    List<int> p,
+    List<List<int>> s,
+  );
+
+  void _transform(
+    Uint8List input,
+    List<int> p,
+    List<List<int>> s,
+  ) {
     final length = input.length;
     if (length == 8) {
       transformBlock(input, 0, p, s);
@@ -114,14 +139,6 @@ abstract class BlowfishECBConverter extends Converter<List<int>, Uint8List> {
       }
     }
   }
-
-  @protected
-  void transformBlock(
-    Uint8List data,
-    int startIndex,
-    List<int> p,
-    List<List<int>> s,
-  );
 
   static void _transformBlockCommon({
     required Uint8List data,
@@ -180,6 +197,23 @@ abstract class BlowfishECBConverter extends Converter<List<int>, Uint8List> {
     y = (y + s[3][d]) & 0xffffffff;
     return y;
   }
+}
+
+class BlowfishECBConverterSink extends Sink<List<int>> {
+  final Sink<Uint8List> output;
+  final void Function(Uint8List block) transformBlock;
+
+  BlowfishECBConverterSink(this.output, this.transformBlock);
+
+  @override
+  void add(List<int> chunk) {
+    final block = Uint8List.fromList(chunk);
+    transformBlock(block);
+    output.add(block);
+  }
+
+  @override
+  void close() => output.close();
 }
 
 class BlowfishECBEncoder extends BlowfishECBConverter {

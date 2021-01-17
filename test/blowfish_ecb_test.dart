@@ -16,6 +16,8 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:blowfish_ecb/src/blowfish_ecb.dart';
@@ -49,6 +51,54 @@ void main() {
 
           expect(decryptedData, equals(sampleDecryptedData));
         },
+      );
+    },
+  );
+
+  group(
+    'Chunked conversions',
+    () {
+      Future<void> testChunkedConversion(
+        Converter<List<int>, Uint8List> converter,
+        List<int> input,
+        List<int> expectedOutput,
+      ) async {
+        final completer = Completer<List<int>>();
+
+        final inputSink = converter.startChunkedConversion(
+          ChunkedConversionSink<Uint8List>.withCallback(
+            (chunks) =>
+                completer.complete([for (final chunk in chunks) ...chunk]),
+          ),
+        );
+        // Add the data in two groups to simulate chunks going through.
+        inputSink.add(input.sublist(0, 32));
+        inputSink.add(input.sublist(32));
+        inputSink.close();
+
+        expect(await completer.future, equals(expectedOutput));
+      }
+
+      late BlowfishECB blowfish;
+
+      setUp(() => blowfish = BlowfishECB(Uint8List.fromList(sampleKey)));
+
+      test(
+        'Encryption',
+        () => testChunkedConversion(
+          blowfish.encoder,
+          sampleDecryptedData,
+          sampleEncryptedData,
+        ),
+      );
+
+      test(
+        'Decryption',
+        () => testChunkedConversion(
+          blowfish.decoder,
+          sampleEncryptedData,
+          sampleDecryptedData,
+        ),
       );
     },
   );
