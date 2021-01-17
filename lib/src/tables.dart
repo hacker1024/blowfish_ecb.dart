@@ -16,6 +16,11 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+List<int> copyP(List<int> p) => List.of(p);
+
+List<List<int>> copyS(List<List<int>> s) =>
+    List.generate(s.length, (index) => List.of(s[index]));
+
 const pInit = [
   0x243f6a88,
   0x85a308d3,
