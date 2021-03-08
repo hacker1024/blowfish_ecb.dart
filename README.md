@@ -3,7 +3,7 @@
 <p align="center">
 <a href="https://pub.dev/packages/blowfish_ecb"><img src="https://img.shields.io/pub/v/blowfish_ecb" alt="pub: blowfish_ecb"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-AGPL v3.0-green.svg" alt="License: AGPL"></a>
-<a href="https://github.com/tenhobi/effective_dart"><img src="https://img.shields.io/badge/style-effective_dart-blue.svg" alt="style: effective dart"></a>
+<a href="https://pub.dev/packages/lint"><img src="https://img.shields.io/badge/style-lint-4BC0F5.svg" alt="style: lint"></a>
 </p>
 
 A pure Dart [Codec](https://api.dart.dev/stable/2.10.4/dart-convert/Codec-class.html)

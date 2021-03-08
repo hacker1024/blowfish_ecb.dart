@@ -49,7 +49,7 @@ int getPKCS5PadCount(List<int> input) {
   final paddingStartIndex = input.length - count;
   for (var i = input.length - 1; i >= paddingStartIndex; --i) {
     if (input[i] != count) {
-      throw FormatException('Padding is not valid PKCS5 padding!');
+      throw const FormatException('Padding is not valid PKCS5 padding!');
     }
   }
 

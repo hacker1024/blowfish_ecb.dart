@@ -61,21 +61,19 @@ class BlowfishECB extends Codec<List<int>, List<int>> {
       _p[i] ^= data;
     }
 
-    var data = Uint8List(8);
+    final data = Uint8List(8);
     for (var i = 0; i < _p.length; i += 2) {
       BlowfishECBEncoder.encryptBlock(data, 0, _p, _s);
-      _p[i] = ((data[0] << 24) + (data[1] << 16) + (data[2] << 8) + data[3]);
-      _p[i + 1] =
-          ((data[4] << 24) + (data[5] << 16) + (data[6] << 8) + data[7]);
+      _p[i] = (data[0] << 24) + (data[1] << 16) + (data[2] << 8) + data[3];
+      _p[i + 1] = (data[4] << 24) + (data[5] << 16) + (data[6] << 8) + data[7];
     }
 
     for (var i = 0; i < 4; ++i) {
       for (var j = 0; j < 256; j += 2) {
         BlowfishECBEncoder.encryptBlock(data, 0, _p, _s);
-        _s[i][j] =
-            ((data[0] << 24) + (data[1] << 16) + (data[2] << 8) + data[3]);
+        _s[i][j] = (data[0] << 24) + (data[1] << 16) + (data[2] << 8) + data[3];
         _s[i][j + 1] =
-            ((data[4] << 24) + (data[5] << 16) + (data[6] << 8) + data[7]);
+            (data[4] << 24) + (data[5] << 16) + (data[6] << 8) + data[7];
       }
     }
   }

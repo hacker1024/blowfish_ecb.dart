@@ -59,7 +59,7 @@ abstract class BlowfishECBConverter extends Converter<List<int>, Uint8List> {
       _transformBlock(input, 0, p, s);
     } else {
       if (length % 8 != 0) {
-        throw FormatException('Data not aligned with 8-byte blocksize');
+        throw FormatException('Data not aligned with 8-byte blocksize', input);
       }
 
       for (var start = 0; start < length; start += 8) {
@@ -77,14 +77,14 @@ abstract class BlowfishECBConverter extends Converter<List<int>, Uint8List> {
     required int looopStopBefore,
     required int loopStep,
   }) {
-    var bL = ((data[0 + startIndex] << 24) +
+    var bL = (data[0 + startIndex] << 24) +
         (data[1 + startIndex] << 16) +
         (data[2 + startIndex] << 8) +
-        data[3 + startIndex]);
-    var bR = ((data[4 + startIndex] << 24) +
+        data[3 + startIndex];
+    var bR = (data[4 + startIndex] << 24) +
         (data[5 + startIndex] << 16) +
         (data[6 + startIndex] << 8) +
-        data[7 + startIndex]);
+        data[7 + startIndex];
 
     for (var i = loopStartAt; i != looopStopBefore; i += loopStep) {
       bL ^= p[i];
@@ -113,13 +113,14 @@ abstract class BlowfishECBConverter extends Converter<List<int>, Uint8List> {
   }
 
   static int _feistel(int x, List<List<int>> s) {
-    final d = x & 0xff;
-    x >>= 8;
-    final c = x & 0xff;
-    x >>= 8;
-    final b = x & 0xff;
-    x >>= 8;
-    final a = x & 0xff;
+    var _x = x;
+    final d = _x & 0xff;
+    _x >>= 8;
+    final c = _x & 0xff;
+    _x >>= 8;
+    final b = _x & 0xff;
+    _x >>= 8;
+    final a = _x & 0xff;
     var y = (s[0][a] + s[1][b]) & 0xffffffff;
     y ^= s[2][c];
     y = (y + s[3][d]) & 0xffffffff;
