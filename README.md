@@ -1,7 +1,7 @@
 # Blowfish ECB for Dart
 
 <p align="center">
-<a href="https://pub.dev/packages/blowfish_ecb"><img src="https://img.shields.io/pub/v/blowfish_ecb?include_prereleases" alt="pub: blowfish_ecb"></a>
+<a href="https://pub.dev/packages/blowfish_ecb"><img src="https://img.shields.io/pub/v/blowfish_ecb" alt="pub: blowfish_ecb"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-AGPL v3.0-green.svg" alt="License: AGPL"></a>
 <a href="https://github.com/tenhobi/effective_dart"><img src="https://img.shields.io/badge/style-effective_dart-blue.svg" alt="style: effective dart"></a>
 </p>
